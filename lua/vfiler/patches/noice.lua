@@ -4,10 +4,24 @@ local M = {}
 
 local setup_done = false
 
-local function event_callback(args)
-  local vfiler = VFiler.exists(args.buf)
-  if not vfiler then
+local function action_redraw(vfiler, context, view)
+  if view:winnr() ~= vim.fn.winnr() then
     return
+  end
+  local conceallevel = vim.wo.conceallevel
+  if view._winoptions.conceallevel ~= conceallevel then
+    view:redraw()
+    view._winoptions.conceallevel = conceallevel
+  end
+end
+
+local function event_callback(args)
+  local vfiler = VFiler.get(args.buf)
+  if not (vfiler and vfiler:visible()) then
+    return
+  end
+  if args.match:match('%l:c') then
+    vfiler:do_action(action_redraw)
   end
 end
 
