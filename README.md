@@ -14,7 +14,7 @@ Plug 'obaland/vfiler-patch-noice.nvim'
 ```
 2. Setup the patch before starting `vfiler.vim`.
 ```lua
-require'vfiler/patches/noive'.setup()
+require'vfiler/patches/noice'.setup()
 -- ...
 require('vfiler').start()
 ```
